@@ -1,28 +1,22 @@
-const items = document.querySelector(".items");
+const items = document.querySelector(".lists");
 const searchBar = document.querySelector("#search");
 
 let users = []
 
 
 //fetch api to get data and assign to variable "trips"
-const fetchTrip = () => {
-try{
-    fetch("https://trips-api-gateway.herokuapp.com/trips")
+async function fetchTrip() {
+
+    await fetch("https://trips-api-gateway.herokuapp.com/trips")
     .then(res => {
         res.json()
-    })
-    .then(res => {
-        trips = res
-        showTrips(trips)
-    })
-}catch(err){
-        console.log(err);
-    }
+        .then(res => {
+            trips = res
+            console.log(trips)
+            showTrips(trips)
+        }).catch(err => console.log(err))
+    }).catch(err => console.log(err))
 }
-
-
-
-
 
 
 
@@ -30,15 +24,54 @@ try{
 const showTrips = arr => {
     let output = "";
 
-    arr.forEach(trip => {
-       output += `<tr>
+    arr.forEach((trip) => {
+       output += `<li class="container-list">
+       <div class="image-card">
+           <img src=${trip.photos[0]} alt="" />
+       </div>
+
+       <div class="contents">
+           <div class="content">
+               <div class="title">
+                   <h2>${trip.title}</h2>
+               </div>
+               <div class="description" id="description">
+                   ${trip.description}
+               </div>
+           
+               <div class="hashtags">
+                   <span>หมวดหมู่: </span>
+                   <span class="tag">
+                       <p>${trip.tags}</p>
+                   </span>
+               </div>
+              
+              
+               <div class="images-slide">
             
-       </tr>`
+                   <div class="slide">
+                       <img src=${trip.photos[1]} />
+                       <img src=${trip.photos[2]} />
+                       <img src=${trip.photos[3]} />
+                    </div>  
+               </div>
+            </div> 
+       </div>
+   </li>`
     })
+    items.innerHTML = output
 }
 
 
-let shortCentent = [];
+document.addEventListener("DOMContentLoaded", fetchTrip);
+
+
+
+
+
+
+
+/*let shortCentent = [];
 let maxheight = '';
 
 window.onload = function() {
@@ -104,3 +137,4 @@ function updateHeight(el){
     el.style.maxHeight = el.scrollHeight + "px";
 }
 
+*/
