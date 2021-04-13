@@ -5,18 +5,20 @@ let users = []
 
 
 //fetch api to get data and assign to variable "trips"
-async function fetchTrip() {
-
-    await fetch("https://trips-api-gateway.herokuapp.com/trips")
-    .then(res => {
-        res.json()
-        .then(res => {
-            trips = res
-            console.log(trips)
-            showTrips(trips)
-        }).catch(err => console.log(err))
-    }).catch(err => console.log(err))
+async function fetchTrip(){
+    const response = await fetch("https://trips-api-gateway.herokuapp.com/trips");
+    const trips = await response.json();
+     showTrips(trips)
 }
+fetchTrip()
+.then(response => {
+    console.log("success")
+})
+.catch(error => {
+    console.log('error');
+    console.log(error);
+})
+
 
 
 
@@ -35,14 +37,18 @@ const showTrips = arr => {
                <div class="title">
                    <h2>${trip.title}</h2>
                </div>
-               <div class="description" id="description">
-                   ${trip.description}
-               </div>
+               
+               <div class="description" id="module">
+                   <p class="collapse" id="collapseId" aria-expanded="false">${trip.description}</p>
+                   <a role="button" class="collapsed" data-toggle="collapse" href="${trip.url}" aria-expanded="false" > 
+                    </a>
+                </div>
            
                <div class="hashtags">
-                   <span>หมวดหมู่: </span>
-                   <span class="tag">
-                       <p>${trip.tags}</p>
+                   <p>หมวดหมู่: </p>
+                   <span class="tag" id="dots">
+                       <p class="collapse_Tag" id="collapseTag" aria-expanded="false"> ${trip.tags}</p>
+                       <a role="button" class="collapseDot" data-toggle="collapse" href="collapseTag" aria-expanded="false" aria-controls="collapseTag"> 
                    </span>
                </div>
               
@@ -60,6 +66,7 @@ const showTrips = arr => {
    </li>`
     })
     items.innerHTML = output
+    
 }
 
 
@@ -70,71 +77,3 @@ document.addEventListener("DOMContentLoaded", fetchTrip);
 
 
 
-
-/*let shortCentent = [];
-let maxheight = '';
-
-window.onload = function() {
-    shortCentent = document.getElementsByClassName("description");
-
-    if(shortCentent.length > 0) {
-        maxheight = window.getComputedStyle(shortCentent[0]).getPropertyValue('max-height')
-        maxheight = parseInt(maxheight.replace('px', ''))
-
-     //add read-more button to each content
-     for(let i=0; shortCentent.length; i++){
-         let el = document.createElement("button");
-         el.innerHTML = "Read More";
-         el.setAttribute("type", "button");
-         el.setAttribute("class", "read-more hid");
-
-        // insertAfter(shortCentent[i], el);
-     }   
-    }
-    //add click function to buttons
-    let readmoreButton = document.getElementsByClassName("read-more");
-    for(let i=0; i< readmoreButton.length; i++){
-        readmoreButton[i].addEventListener("click", function(){
-            revealThis(this);
-        }, false);
-    }
-    //ubdate buttons so only needed one show
-    updateReadMore();
-}
-
-
-//show only the nassasary read more buttons
-function updateReadMore(){
-    if(shortCentent > 0){
-        for(let i = 0; i < shortCentent.length; i++){
-            if(shortCentent[i].scrollHeight > maxheight){
-                if(shortCentent[i].hasAttribute("style")){
-                    updateHeight(shortCentent[i]);
-                }
-                shortCentent[i].nextElementSibling.className = "read-more";
-            }else{
-                shortCentent[i].nextElementSibling.className = "read more hid";
-
-            }
-        }
-    }
-}
-
-
-
-function revealThis(current){
-    let el = current.previousElementSibling;
-    if(el.hasAttribute("style")){
-        current.innerHTML = "Read More";
-        el.removeAttribute("style");
-    }else{
-        updateHeight(el);
-        current.innerHTML = "show Less";
-    }
-}
-
-function updateHeight(el){
-    el.style.maxHeight = el.scrollHeight + "px";
-}
-
-*/
