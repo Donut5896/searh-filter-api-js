@@ -70,18 +70,12 @@
     border-radius: 10px;
 }
 
-.contents{
-    grid-column: span 1 ;
-}
-
 .content{
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: left;
-  
-    
+    align-items: left;   
 }
 .title{
     display: flex;
