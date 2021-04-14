@@ -40,15 +40,15 @@ const showTrips = arr => {
                
                <div class="description" id="module">
                    <p class="collapse" id="collapseId" aria-expanded="false">${trip.description}</p>
-                   <a role="button" class="collapsed" data-toggle="collapse" href="${trip.url}" aria-expanded="false" > 
+                   <a role="button" class="collapsed" data-toggle="collapse" href="${trip.url}" aria-expanded="false"> 
                     </a>
                 </div>
            
                <div class="hashtags">
-                   <p>หมวดหมู่: </p>
+                   <h5>หมวดหมู่: </h5>
                    <span class="tag" id="dots">
-                       <p class="collapse_Tag" id="collapseTag" aria-expanded="false"> ${trip.tags}</p>
-                       <a role="button" class="collapseDot" data-toggle="collapse" href="collapseTag" aria-expanded="false" aria-controls="collapseTag"> 
+                       <p class="collapse_" id="collapseTag" aria-expanded="false"> ${trip.tags}</p>
+                       <a role="button" class="collapseDot" data-toggle="collapse_" href="${trip.url}" aria-expanded="false" > 
                    </span>
                </div>
               

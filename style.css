@@ -16,7 +16,9 @@
 .searchBar{
     overflow: hidden;
     margin: 10px auto;
-    border-radius: 5%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 50%;
 }
 
 .search{
@@ -47,22 +49,20 @@
     gap: 1rem;
     margin: 2rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
+  max-height: 18rem;
 }
 
 .image-card{
    flex-shrink: 0;
-   height: 15rem;
+ 
    width: 100%;
    background-position: bottom;
    object-fit: none;
    border-width: 1px;
-
-
 }
 
 .image-card img{
-    height: 17.5rem;
+    height: 18rem;
     width: 100%;
     background-position: bottom;
     width: 12rem;
@@ -80,8 +80,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: left;
-    padding: 1rem;
-    margin-top: 0;
+  
     
 }
 .title{
@@ -97,7 +96,16 @@
 .hashtags{
     display: flex;
     padding-right: 10px;
-    font-size: 14px;
+    font-size: 16px;
+    justify-content: left;
+    align-items: center;
+    height: 1.5rem;
+    margin-bottom: 1rem;
+}
+.hashtags h5{
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
 }
 
 .tag p{
@@ -105,7 +113,6 @@
     justify-content: space-around;
     border-radius: 15%;
     font-size: 14px;
-    background-color: rgb(230, 224, 224);
 }
 
 /* images gallery */
@@ -124,11 +131,12 @@
 }
 
 .slide img{
-    height: 5rem;
-    display: flex;
-    position: cover;
-    border-radius: 10px;
-    align-items: center;
+  height: 4rem;
+  display: flex;
+  position: cover;
+  border-radius: 10px;
+  align-items: center;
+  width: 7rem
 }
 
 
@@ -137,11 +145,16 @@
 #module {
     font-size: 14px;
     line-height: 1.7;
+    text-decoration: none;
   }
-
+  #module p{
+     text-decoration: none;
+    list-style: none;
+  }
   #module #collapseId.collapse:not(.show) {
     display: block;
     height: 3rem;
+   
     overflow: hidden;
   }
   
@@ -153,34 +166,38 @@
     content: 'Read More';
   }
   
-  #module a:not(.collapsed)::after {
-    content: 'Show Less';
-  }
   
-  #module #collapseId.collapse:not(.show) {
-    display: block;
-    height: 3rem;
-    overflow: hidden;
-  }
  
   
+/* hashtags */
 
-
-
-  #dots #collapseTag.collapsing {
-    height: 3rem;
+  #dots {
+    font-size: 14px;
+    line-height: 3rem;
+     display: flex;
+     text-decoration: none;
+    justify-content: center;
+    align-items: center;
   }
+  #dots #collapseTag.collapse_:not(.show) {
+    display: flex;
+    height: 2rem;
+    text-decoration: none;
+    overflow: hidden;
+    justify-content: center;
+    align-items: left;
+  }
+  
+  #dots #collapseTag.collapsing {
+    height: 2rem;
+  }
+
   
   #dots a.collapseDot::after {
     content: '...';
   }
   
   #dots a:not(.collapseDot)::after {
-    content: '...';
+    content: 'show less';
   }
 
-  #dots #collapseTag.collapse:not(.show) {
-    display: block;
-    height: 3rem;
-    overflow: hidden;
-  }
