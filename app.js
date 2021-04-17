@@ -1,10 +1,11 @@
 const items = document.querySelector(".lists");
-const searchBar = document.getElementById("search");
+const searchBar = document.querySelector(".searchTag");
+
+let  searchTrips = [];
+let filterTags = [];
 
 
-
-
-//fetch api to get data and assign to variable "trips"
+//alternative fetch api to get data 
 /*async function fetchTrip(){
     const response = await fetch("https://trips-api-gateway.herokuapp.com/trips");
     const trips = await response.json();
@@ -20,11 +21,14 @@ fetchTrip()
 })*/
 
 
-let  searchTrips = [];
+
+//searchBar filter 
+function searchText(){
 
 searchBar.addEventListener("keyup", e => {
     const searchString = e.target.value;
-    const filteredTrips =  searchTrips.filter(trip => {
+
+    const filteredTrips =  searchTrips.filter(trip => {  
     return (
         trip.title.includes(searchString) ||
         trip.description.includes(searchString)||
@@ -33,18 +37,14 @@ searchBar.addEventListener("keyup", e => {
     
 });
     showTrips(filteredTrips);
-  
+   
 })
+}
 
 
 
 
-
-
-
-
-
-
+//fetch data from api
 const loadTrips = async() => {
     try{
         const res = await fetch("https://trips-api-gateway.herokuapp.com/trips");
@@ -62,6 +62,11 @@ const loadTrips = async() => {
 
 
 
+
+
+
+
+//display data
 const showTrips = (trips) => {
     const output = trips
         .map((trip) => {
@@ -87,7 +92,13 @@ const showTrips = (trips) => {
                <div class="hashtags" id="hashtags">
                    <h5>หมวดหมู่: </h5>
                    <span class="tag" id="dots">
-                       <p class="collapse_" id="collapseTag" aria-expanded="false"> ${trip.tags}</p>
+                       <p class="collapse_" id="collapseTag" aria-expanded="false"> 
+                          <button class="tab">${trip.tags[0]}</button>
+                          <button class="tab"> ${trip.tags[1]}</button>
+                          <button class="tab"> ${trip.tags[2]}</button>
+                          <button class="tab"> ${trip.tags[3]}</button>
+    
+                       </p>
                        <a role="button" class="collapseDot" data-toggle="collapse_" href="${trip.url}" aria-expanded="false" > 
                    </span>
                </div>
@@ -107,46 +118,108 @@ const showTrips = (trips) => {
         }).join('');
     
     items.innerHTML = output;
+    const tag = document.getElementsByClassName("tab");
+    
+
+
+   const buttonTags = [...tag];
+   
+   
+
+buttonTags.forEach( (tag) => {
+
+        tag.addEventListener("click", (e) => {
+            items.innerHTML = "";
+            const targetText = e.target.innerHTML;
+            filterTags.push(targetText);
+
+            //array for clicked tags
+            filterTags = [...new Set(filterTags)];
+        
+            setTripList(filterTags);
+           
+        }) 
+        
+    })
+
 
 }
+
 
 loadTrips();
 
 
 
 
-// function myFunction(){
 
-//     let input, filter, element, span, p, tag, i;
-//     input = document.getElementById("search");
 
-//     filter = input.value.toUpperCase();
+function setTripList(filter){
   
-//     //tag_div = document.getElementById("hashtags");
-//     //console.log(tag_div)
-//     // element = document.querySelector(".hashtags");
-//     // console.log(element)
-//     // span=  element.querySelector(".tag"); 
-//     // console.log(span)
-//     // p = span.getElementByClassName("collapse_");
-
-//     p = document.getElementsByClassName("collapse_");
- 
-
-
-//     for( i=0; i< p.lenght; i++){
-//             tag = p[i]
+     if(filter){
+        filter.forEach((word) => {
+            items.innerHTML = "";
+            setTabs(filter);
+        
+            searchText(word);
           
-//        if( tag.innerHTML.toUpperCase().indexOf(filter)===0){
-//             p[i].style.display = "";
-//             console.log(tag)
-//        }else{
-//            p[i].style.display = "none";
-//  console.log(tag)
-//        }
-   
-//     }
+        })
+    }
+}
 
 
-// }
 
+
+
+
+
+
+
+function setTabs(tab){
+    searchBar.innerHTML = "";
+    return tab.forEach((item) => {
+        createTaps(item)
+    })
+}
+
+
+
+setTripList();
+
+
+function createTaps(item){
+    const tabEl = document.createElement("div");
+    tabEl.classList.add("tabs");
+
+    const para = document.createElement("p");
+    para.innerHTML = item;
+    tabEl.appendChild(para);
+
+    const button = document.createElement("button");
+    
+    const cancleEl = document.createElement("div");
+    cancleEl.classList.add("cancel");
+    button.appendChild(cancleEl);
+    tabEl.appendChild(button);
+
+    button.addEventListener("click", (e) => {
+        let text = e.target.closest(".tabs").querySelector("p").textContent;
+        tabEl.remove();
+        return setTripList(ccc(text));
+    })
+    return [searchBar.appendChild(tabEl)];
+
+}
+
+
+
+
+function ccc(text){
+    filterTags = filterTags.filter((item) => {
+        if(item != text){
+            return item
+        }
+        console.log(item);
+        console.log(text);
+    }) 
+    return [...filterTags];
+}
