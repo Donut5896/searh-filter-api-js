@@ -160,7 +160,9 @@ function setTripList(filter){
             items.innerHTML = "";
             setTabs(filter);
         
-            searchText(word);
+            return  searchlocation(word).forEach((item => {
+                return[...new Set (showTrips(item))];
+            }))
           
         })
     }
@@ -222,4 +224,16 @@ function ccc(text){
         console.log(text);
     }) 
     return [...filterTags];
+}
+
+function searchlocation(word){
+    searchTrips = searchTrips.filter((item) => {
+        if(
+            item.tags.includes(word)
+            
+        ){
+            return item
+        }
+    })
+    return searchTrips
 }
