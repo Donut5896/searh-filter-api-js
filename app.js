@@ -1,5 +1,5 @@
 const items = document.querySelector(".lists");
-const searchBar = document.querySelector(".search");
+const searchBar = document.getElementById("search");
 
 
 
@@ -27,12 +27,13 @@ searchBar.addEventListener("keyup", e => {
     const filteredTrips =  searchTrips.filter(trip => {
     return (
         trip.title.includes(searchString) ||
-        trip.tags.includes(searchString) ||
-        trip.description.includes(searchString)
+        trip.description.includes(searchString)||
+        trip.tags.includes(searchString)
     );
+    
 });
     showTrips(filteredTrips);
-    console.log(filteredTrips)
+  
 })
 
 
@@ -47,8 +48,8 @@ searchBar.addEventListener("keyup", e => {
 const loadTrips = async() => {
     try{
         const res = await fetch("https://trips-api-gateway.herokuapp.com/trips");
-        const searchTrips = await res.json();
-        showTrips(searchTrips);
+        searchTrips = await res.json();
+       showTrips(searchTrips);
     }catch(err){
         console.log(err);
     }
@@ -106,7 +107,6 @@ const showTrips = (trips) => {
         }).join('');
     
     items.innerHTML = output;
-    
 
 }
 
